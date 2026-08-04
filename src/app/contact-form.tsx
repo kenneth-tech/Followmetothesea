@@ -95,6 +95,16 @@ export function ContactForm() {
           required
         />
       </label>
+      <label>
+        <span>Message</span>
+        <textarea
+          maxLength={1000}
+          name="message"
+          placeholder="Tell us what you need"
+          required
+          rows={4}
+        />
+      </label>
       <button type="submit">
         {sent ? "Message received!" : "Send inquiry"}
         <ArrowIcon />

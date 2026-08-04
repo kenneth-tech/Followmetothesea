@@ -199,12 +199,12 @@ export default function PackagesPage() {
                       ))}
                     </ul>
                   </div>
-                  <Link href="/contact" aria-label={`Choose ${option.name}`}>
-                    <span>
-                      Choose this plan
-                      <small>Continue to contact</small>
-                    </span>
-                    <ArrowIcon />
+                  <Link
+                    href="/contact"
+                    className="package-subscribe-button"
+                    aria-label={`Subscribe to ${option.name}`}
+                  >
+                    Subscribe Now
                   </Link>
                 </article>
               ))}

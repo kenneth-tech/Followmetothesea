@@ -1,5 +1,6 @@
 import { ContactForm } from "./contact-form";
 import Link from "next/link";
+import Image from "next/image";
 import { SiteHeader } from "./site-header";
 import { PackageIcon } from "./package-icon";
 import { ArrowIcon } from "./arrow-icon";
@@ -7,12 +8,139 @@ import { SiteFooter } from "./site-footer";
 import { AnimatedRouteLink } from "./animated-route-link";
 
 const caseStudies = [
-  { name: "Quantak", before: "184", after: "1.2K" },
-  { name: "HMM", before: "236", after: "1.4K" },
-  { name: "CCP", before: "317", after: "1.8K" },
-  { name: "Bero", before: "128", after: "1.1K" },
-  { name: "Belt Mania", before: "402", after: "2.3K" },
-  { name: "Yidlink", before: "195", after: "1.3K" },
+  {
+    name: "Quantak",
+    before: "353",
+    after: "1.2K",
+    screenshots: [
+      {
+        src: "/Before/quantak.png",
+        alt: "Quantak Instagram profile before follower growth",
+        width: 736,
+        height: 244,
+      },
+      {
+        src: "/After/quantak.png",
+        alt: "Quantak Instagram profile after follower growth",
+        width: 628,
+        height: 223,
+      },
+    ],
+  },
+  {
+    name: "HMM",
+    before: "476",
+    after: "1.3K",
+    screenshots: [
+      {
+        src: "/Before/hmm.png",
+        alt: "HMM Instagram profile before follower growth",
+        width: 736,
+        height: 238,
+      },
+      {
+        src: "/After/hmm.png",
+        alt: "HMM Instagram profile after follower growth",
+        width: 853,
+        height: 218,
+      },
+    ],
+  },
+  {
+    name: "CCP",
+    before: "1.3K",
+    after: "2.2K",
+    screenshots: [
+      {
+        src: "/Before/ccp.png",
+        alt: "CCP Instagram profile before follower growth",
+        width: 767,
+        height: 219,
+      },
+      {
+        src: "/After/ccp.png",
+        alt: "CCP Instagram profile after follower growth",
+        width: 942,
+        height: 214,
+      },
+    ],
+  },
+  {
+    name: "Bero Wine",
+    before: "2.1K",
+    after: "2.9K",
+    screenshots: [
+      {
+        src: "/Before/berowine.png",
+        alt: "Bero Wine Instagram profile before follower growth",
+        width: 719,
+        height: 237,
+      },
+      {
+        src: "/After/berowine.png",
+        alt: "Bero Wine Instagram profile after follower growth",
+        width: 754,
+        height: 230,
+      },
+    ],
+  },
+  {
+    name: "Belt Mania",
+    before: "20",
+    after: "871",
+    screenshots: [
+      {
+        src: "/Before/beltmania.png",
+        alt: "Belt Mania Instagram profile before follower growth",
+        width: 708,
+        height: 212,
+      },
+      {
+        src: "/After/beltmania.png",
+        alt: "Belt Mania Instagram profile after follower growth",
+        width: 737,
+        height: 230,
+      },
+    ],
+  },
+  {
+    name: "Yidlink",
+    before: "26",
+    after: "877",
+    screenshots: [
+      {
+        src: "/Before/yidlink.png",
+        alt: "Yidlink Instagram profile before follower growth",
+        width: 685,
+        height: 220,
+      },
+      {
+        src: "/After/yidlink.png",
+        alt: "Yidlink Instagram profile after follower growth",
+        width: 715,
+        height: 222,
+      },
+    ],
+  },
+  {
+    name: "SandSea Media",
+    before: "309",
+    after: "1.2K",
+    screenshots: [
+      {
+        src: "/Before/sandseamedia.png",
+        alt: "SandSea Media Instagram profile before follower growth",
+        width: 720,
+        height: 249,
+      },
+      {
+        src: "/After/sandseamedia.png",
+        alt: "SandSea Media Instagram profile after follower growth",
+        width: 802,
+        height: 228,
+      },
+    ],
+  },
 ];
 
 const packages = [
@@ -35,7 +163,7 @@ const packages = [
 
 export default function Home() {
   return (
-    <main id="top">
+    <main className="home-page" id="top">
       <div className="sticky-header">
         <SiteHeader />
       </div>
@@ -98,8 +226,43 @@ export default function Home() {
 
           <div className="case-grid">
             {caseStudies.map((study, index) => (
-              <article className="case-card" key={study.name}>
-                <div className={`case-visual visual-${(index % 3) + 1}`}>
+              <article
+                className={`case-card${study.screenshots ? " featured-case" : ""}`}
+                key={study.name}
+              >
+                <div
+                  className={`case-visual visual-${(index % 3) + 1}${
+                    study.screenshots ? " has-screenshots" : ""
+                  }`}
+                >
+                  {study.screenshots && (
+                    <>
+                      <div className="case-screenshot-stack">
+                        {study.screenshots.map((screenshot) => (
+                          <div className="case-screenshot-frame" key={screenshot.src}>
+                            <Image
+                              src={screenshot.src}
+                              alt={screenshot.alt}
+                              width={screenshot.width}
+                              height={screenshot.height}
+                              className="case-screenshot"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="metric-row screenshot-metrics">
+                        <div>
+                          <small>Before</small>
+                          <strong>{study.before}</strong>
+                        </div>
+                        <ArrowIcon />
+                        <div>
+                          <small>After</small>
+                          <strong>{study.after}</strong>
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <span className="asset-note">Screenshot pending · Shaula</span>
                   <div className="profile-orb">{study.name.charAt(0)}</div>
                   <p>{study.name}</p>
