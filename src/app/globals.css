@@ -992,10 +992,10 @@ footer nav svg {
 }
 
 .order-popup {
-  background: var(--navy);
-  border: 1px solid rgba(127,255,212,.28);
+  background: white;
+  border: 1px solid rgba(8,23,44,.12);
   box-shadow: 0 24px 80px rgba(0,0,0,.34);
-  color: white;
+  color: var(--navy);
   max-height: calc(100vh - 40px);
   max-width: 560px;
   overflow-y: auto;
@@ -1006,9 +1006,9 @@ footer nav svg {
 
 .order-popup-close {
   align-items: center;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  color: white;
+  background: #f3f7f7;
+  border: 1px solid var(--line);
+  color: var(--navy);
   cursor: pointer;
   display: flex;
   font-size: 24px;
@@ -1021,7 +1021,7 @@ footer nav svg {
 }
 
 .order-popup-label {
-  color: var(--aqua);
+  color: #607378;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: .18em;
@@ -1042,14 +1042,14 @@ footer nav svg {
 }
 
 .order-popup-form label {
-  border-bottom: 1px solid rgba(255,255,255,.18);
+  border-bottom: 1px solid var(--line);
   display: grid;
   gap: 8px;
   padding-bottom: 12px;
 }
 
 .order-popup-form label span {
-  color: rgba(255,255,255,.55);
+  color: #607378;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .16em;
@@ -1059,7 +1059,7 @@ footer nav svg {
 .order-popup-form input {
   background: transparent;
   border: 0;
-  color: white;
+  color: var(--navy);
   font: inherit;
   font-size: 16px;
   outline: 0;
@@ -1068,7 +1068,7 @@ footer nav svg {
 }
 
 .order-popup-form input::placeholder {
-  color: rgba(255,255,255,.28);
+  color: #9aabad;
 }
 
 .order-popup-form small {
@@ -1105,7 +1105,7 @@ footer nav svg {
 }
 
 .order-popup-next-step p:not(.order-popup-label) {
-  color: rgba(255,255,255,.68);
+  color: #607378;
   line-height: 1.7;
   margin: 0 0 24px;
 }
