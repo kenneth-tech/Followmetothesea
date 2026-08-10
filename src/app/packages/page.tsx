@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SiteHeader } from "../site-header";
 import { PackageIcon } from "../package-icon";
 import { ArrowIcon } from "../arrow-icon";
@@ -217,9 +218,9 @@ export default function PackagesPage() {
         <div className="page-shell">
           <p>Need something else for your socials?</p>
           <h2>Let&apos;s build the right package together.</h2>
-          <OrderPopup triggerClassName="packages-inline-cta">
+          <Link className="packages-inline-cta" href="/contact">
             Contact us <ArrowIcon />
-          </OrderPopup>
+          </Link>
         </div>
       </section>
 
