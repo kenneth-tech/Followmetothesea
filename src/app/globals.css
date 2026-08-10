@@ -1056,7 +1056,8 @@ footer nav svg {
   text-transform: uppercase;
 }
 
-.order-popup-form input {
+.order-popup-form input,
+.order-popup-form select {
   background: transparent;
   border: 0;
   color: var(--navy);
@@ -1065,6 +1066,19 @@ footer nav svg {
   outline: 0;
   padding: 4px 0;
   width: 100%;
+}
+
+.order-popup-form select {
+  appearance: none;
+  background:
+    linear-gradient(45deg, transparent 50%, #607378 50%) calc(100% - 15px) 50% / 6px 6px no-repeat,
+    linear-gradient(135deg, #607378 50%, transparent 50%) calc(100% - 10px) 50% / 6px 6px no-repeat;
+  cursor: pointer;
+  padding-right: 30px;
+}
+
+.order-popup-form select option {
+  color: var(--navy);
 }
 
 .order-popup-form input::placeholder {

@@ -1,3 +1,15 @@
+export const ORDER_GOAL_OPTIONS = [
+  "1K Followers",
+  "2K Followers",
+  "5K Followers",
+  "1K Likes",
+  "2K Likes",
+  "5K Likes",
+  "1K Views",
+  "5K Views",
+  "10K Views",
+] as const;
+
 export type OrderDraft = {
   name: string;
   socialLink: string;

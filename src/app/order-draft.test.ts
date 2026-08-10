@@ -1,6 +1,24 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createOrderDraft, validateOrderDraft } from "./order-draft.ts";
+import {
+  ORDER_GOAL_OPTIONS,
+  createOrderDraft,
+  validateOrderDraft,
+} from "./order-draft.ts";
+
+test("ORDER_GOAL_OPTIONS includes every package goal", () => {
+  assert.deepEqual(ORDER_GOAL_OPTIONS, [
+    "1K Followers",
+    "2K Followers",
+    "5K Followers",
+    "1K Likes",
+    "2K Likes",
+    "5K Likes",
+    "1K Views",
+    "5K Views",
+    "10K Views",
+  ]);
+});
 
 test("createOrderDraft prefills the goal and starts other fields empty", () => {
   assert.deepEqual(createOrderDraft("1K Followers"), {

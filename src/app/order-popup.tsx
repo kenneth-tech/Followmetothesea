@@ -3,6 +3,7 @@
 import { FormEvent, ReactNode, useEffect, useId, useState } from "react";
 import { ArrowIcon } from "./arrow-icon";
 import {
+  ORDER_GOAL_OPTIONS,
   createOrderDraft,
   validateOrderDraft,
   type OrderDraft,
@@ -141,15 +142,19 @@ export function OrderPopup({
                   </label>
                   <label>
                     <span>Goal</span>
-                    <input
-                      maxLength={120}
+                    <select
                       onChange={(event) =>
                         updateField("goal", event.target.value)
                       }
-                      placeholder="1K likes, 5K followers, 10K views"
-                      type="text"
                       value={draft.goal}
-                    />
+                    >
+                      <option value="">Select a package</option>
+                      {ORDER_GOAL_OPTIONS.map((goal) => (
+                        <option key={goal} value={goal}>
+                          {goal}
+                        </option>
+                      ))}
+                    </select>
                     {errors.goal && <small>{errors.goal}</small>}
                   </label>
                   <button type="submit">
