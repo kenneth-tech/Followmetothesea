@@ -32,17 +32,28 @@ export const ORDER_GOAL_OPTIONS = ORDER_GOAL_GROUPS.flatMap(
 export type OrderDraft = {
   name: string;
   socialLink: string;
-  goal: string;
+  packages: string[];
 };
 
 export type OrderDraftErrors = Partial<Record<keyof OrderDraft, string>>;
 
-export function createOrderDraft(initialGoal = ""): OrderDraft {
+export function createOrderDraft(initialPackage = ""): OrderDraft {
   return {
     name: "",
     socialLink: "",
-    goal: initialGoal,
+    packages: initialPackage ? [initialPackage] : [],
   };
+}
+
+export function toggleOrderPackage(
+  selectedPackages: string[],
+  packageName: string,
+): string[] {
+  if (selectedPackages.includes(packageName)) {
+    return selectedPackages.filter((selectedPackage) => selectedPackage !== packageName);
+  }
+
+  return [...selectedPackages, packageName];
 }
 
 export function validateOrderDraft(draft: OrderDraft): {
@@ -59,8 +70,8 @@ export function validateOrderDraft(draft: OrderDraft): {
     errors.socialLink = "Enter a social media page link.";
   }
 
-  if (!draft.goal.trim()) {
-    errors.goal = "Enter your goal.";
+  if (draft.packages.length === 0) {
+    errors.packages = "Choose at least one package.";
   }
 
   return {

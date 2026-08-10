@@ -4,6 +4,7 @@ import {
   ORDER_GOAL_GROUPS,
   ORDER_GOAL_OPTIONS,
   createOrderDraft,
+  toggleOrderPackage,
   validateOrderDraft,
 } from "./order-draft.ts";
 
@@ -50,12 +51,24 @@ test("ORDER_GOAL_OPTIONS includes every package goal", () => {
   ]);
 });
 
-test("createOrderDraft prefills the goal and starts other fields empty", () => {
+test("createOrderDraft prefills one selected package and starts other fields empty", () => {
   assert.deepEqual(createOrderDraft("1K Followers"), {
     name: "",
     socialLink: "",
-    goal: "1K Followers",
+    packages: ["1K Followers"],
   });
+});
+
+test("toggleOrderPackage adds and removes packages", () => {
+  assert.deepEqual(toggleOrderPackage([], "1K Followers"), ["1K Followers"]);
+  assert.deepEqual(toggleOrderPackage(["1K Followers"], "5K Likes"), [
+    "1K Followers",
+    "5K Likes",
+  ]);
+  assert.deepEqual(
+    toggleOrderPackage(["1K Followers", "5K Likes"], "1K Followers"),
+    ["5K Likes"],
+  );
 });
 
 test("validateOrderDraft reports required field errors", () => {
@@ -64,7 +77,7 @@ test("validateOrderDraft reports required field errors", () => {
     errors: {
       name: "Enter your name.",
       socialLink: "Enter a social media page link.",
-      goal: "Enter your goal.",
+      packages: "Choose at least one package.",
     },
   });
 });
@@ -74,7 +87,7 @@ test("validateOrderDraft accepts a complete draft", () => {
     validateOrderDraft({
       name: "Jane Doe",
       socialLink: "https://instagram.com/example",
-      goal: "1K Likes",
+      packages: ["1K Likes", "5K Views"],
     }),
     {
       valid: true,

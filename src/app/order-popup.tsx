@@ -11,6 +11,7 @@ import { ArrowIcon } from "./arrow-icon";
 import {
   ORDER_GOAL_GROUPS,
   createOrderDraft,
+  toggleOrderPackage,
   validateOrderDraft,
   type OrderDraft,
   type OrderDraftErrors,
@@ -59,13 +60,17 @@ export function OrderPopup({
     setIsOpen(true);
   }
 
-  function updateField(field: keyof OrderDraft, value: string) {
+  function updateField(field: "name" | "socialLink", value: string) {
     setDraft((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
   }
 
-  function selectGoal(goal: string) {
-    updateField("goal", goal);
+  function togglePackage(packageName: string) {
+    setDraft((current) => ({
+      ...current,
+      packages: toggleOrderPackage(current.packages, packageName),
+    }));
+    setErrors((current) => ({ ...current, packages: undefined }));
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -151,32 +156,45 @@ export function OrderPopup({
                     {errors.socialLink && <small>{errors.socialLink}</small>}
                   </label>
                   <label>
-                    <span>Goal</span>
+                    <span>Packages</span>
                     <div
-                      aria-label="Choose a package goal"
-                      className="order-goal-selector"
+                      aria-label="Choose packages"
+                      className="order-package-selector"
                       role="group"
                     >
                       {ORDER_GOAL_GROUPS.map((group) => (
-                        <div className="order-goal-group" key={group.label}>
+                        <div className="order-package-group" key={group.label}>
                           <p>{group.label}</p>
-                          <div className="order-goal-options">
+                          <div className="order-package-options">
                             {group.options.map((option) => (
                               <button
-                                aria-pressed={draft.goal === option.value}
-                                className={`order-goal-option${draft.goal === option.value ? " is-selected" : ""}`}
+                                aria-checked={draft.packages.includes(
+                                  option.value,
+                                )}
+                                className={`order-package-option${draft.packages.includes(option.value) ? " is-selected" : ""}`}
                                 key={option.value}
-                                onClick={() => selectGoal(option.value)}
+                                onClick={() => togglePackage(option.value)}
+                                role="checkbox"
                                 type="button"
                               >
-                                {option.label}
+                                <span
+                                  aria-hidden="true"
+                                  className="order-package-box"
+                                />
+                                <span>{option.value}</span>
                               </button>
                             ))}
                           </div>
                         </div>
                       ))}
                     </div>
-                    {errors.goal && <small>{errors.goal}</small>}
+                    {draft.packages.length > 0 && (
+                      <div className="order-package-summary">
+                        <span>Selected packages</span>
+                        <p>{draft.packages.join(", ")}</p>
+                      </div>
+                    )}
+                    {errors.packages && <small>{errors.packages}</small>}
                   </label>
                   <button className="order-popup-submit" type="submit">
                     Continue <ArrowIcon />
