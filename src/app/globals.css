@@ -1111,8 +1111,8 @@ footer nav svg {
 
 .order-popup-form input:focus {
   background: white;
-  border-color: var(--aqua);
-  box-shadow: 0 0 0 3px rgba(109, 248, 206, .2);
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(8, 23, 44, .12);
 }
 
 .order-popup-form input::placeholder {
