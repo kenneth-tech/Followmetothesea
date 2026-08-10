@@ -859,10 +859,10 @@ footer nav svg {
 }
 
 .contact-form label {
-  border-bottom: 1px solid rgba(255,255,255,.2);
+  border-bottom: 0;
   display: grid;
-  gap: 8px;
-  padding-bottom: 14px;
+  gap: 10px;
+  padding-bottom: 0;
 }
 
 .contact-form label span {
@@ -875,15 +875,25 @@ footer nav svg {
 
 .contact-form input,
 .contact-form textarea {
-  background: transparent;
-  border: 0;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 6px;
   color: white;
   font-family: inherit;
   font-size: 16px;
   min-width: 0;
   outline: 0;
-  padding: 4px 0;
+  padding: 14px 16px;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
   width: 100%;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.phone-field select:focus {
+  background: rgba(255,255,255,.08);
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 3px rgba(109, 248, 206, .16);
 }
 
 .contact-form textarea {
@@ -894,22 +904,24 @@ footer nav svg {
 .phone-field {
   align-items: center;
   display: grid;
-  gap: 14px;
+  gap: 10px;
   grid-template-columns: auto 1fr;
 }
 
 .phone-field select {
   appearance: none;
   background:
-    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.6) 50%) calc(100% - 9px) 50% / 4px 4px no-repeat,
-    linear-gradient(135deg, rgba(255,255,255,.6) 50%, transparent 50%) calc(100% - 5px) 50% / 4px 4px no-repeat;
-  border: 0;
-  border-right: 1px solid rgba(255,255,255,.18);
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.6) 50%) calc(100% - 20px) 50% / 5px 5px no-repeat,
+    linear-gradient(135deg, rgba(255,255,255,.6) 50%, transparent 50%) calc(100% - 15px) 50% / 5px 5px no-repeat,
+    rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 6px;
   color: var(--aqua);
   cursor: pointer;
   font-size: 13px;
   outline: 0;
-  padding: 6px 25px 6px 0;
+  padding: 14px 34px 14px 16px;
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
   width: 175px;
 }
 
@@ -921,10 +933,6 @@ footer nav svg {
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: rgba(255,255,255,.3);
-}
-
-.contact-form label:focus-within {
-  border-color: var(--aqua);
 }
 
 .contact-form button {
@@ -2922,9 +2930,8 @@ footer nav svg {
   }
 
   .phone-field select {
-    border-bottom: 1px solid rgba(255,255,255,.14);
-    border-right: 0;
-    padding-bottom: 12px;
+    border: 1px solid rgba(255,255,255,.16);
+    padding: 14px 34px 14px 16px;
     width: 100%;
   }
 
