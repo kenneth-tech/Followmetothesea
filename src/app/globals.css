@@ -1048,7 +1048,7 @@ footer nav svg {
   padding-bottom: 12px;
 }
 
-.order-popup-form label span {
+.order-popup-form label > span {
   color: #607378;
   font-size: 9px;
   font-weight: 800;
@@ -1056,8 +1056,7 @@ footer nav svg {
   text-transform: uppercase;
 }
 
-.order-popup-form input,
-.order-popup-form select {
+.order-popup-form input {
   background: transparent;
   border: 0;
   color: var(--navy);
@@ -1068,21 +1067,124 @@ footer nav svg {
   width: 100%;
 }
 
-.order-popup-form select {
-  appearance: none;
-  background:
-    linear-gradient(45deg, transparent 50%, #607378 50%) calc(100% - 15px) 50% / 6px 6px no-repeat,
-    linear-gradient(135deg, #607378 50%, transparent 50%) calc(100% - 10px) 50% / 6px 6px no-repeat;
-  cursor: pointer;
-  padding-right: 30px;
+.order-popup-form input::placeholder {
+  color: #9aabad;
 }
 
-.order-popup-form select option {
+.order-goal-picker {
+  position: relative;
+}
+
+.order-goal-trigger {
+  align-items: center;
+  background: #f7fbfa;
+  border: 1px solid #dbe5e7;
+  color: #7a8f94;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 16px;
+  justify-content: space-between;
+  min-height: 48px;
+  outline: 0;
+  padding: 0 14px;
+  text-align: left;
+  transition: border-color .2s ease, box-shadow .2s ease, color .2s ease;
+  width: 100%;
+}
+
+.order-goal-trigger:hover,
+.order-goal-trigger:focus-visible,
+.order-goal-trigger.is-open {
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 3px rgba(109, 248, 206, .22);
+}
+
+.order-goal-trigger.has-value {
   color: var(--navy);
 }
 
-.order-popup-form input::placeholder {
-  color: #9aabad;
+.order-goal-chevron {
+  border-bottom: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  flex: 0 0 auto;
+  height: 8px;
+  margin-left: 14px;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .2s ease;
+  width: 8px;
+}
+
+.order-goal-trigger.is-open .order-goal-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.order-goal-menu {
+  background: white;
+  border: 1px solid #dbe5e7;
+  box-shadow: 0 18px 45px rgba(4, 20, 39, .16);
+  display: grid;
+  gap: 12px;
+  left: 0;
+  max-height: 310px;
+  overflow-y: auto;
+  padding: 12px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+}
+
+.order-goal-group {
+  display: grid;
+  gap: 6px;
+}
+
+.order-goal-group p {
+  color: #607378;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  margin: 0 2px 2px;
+  text-transform: uppercase;
+}
+
+.order-goal-option {
+  align-items: center;
+  background: #f7fbfa;
+  border: 1px solid transparent;
+  color: var(--navy);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 15px;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: 0 12px;
+  text-align: left;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  width: 100%;
+}
+
+.order-goal-option:hover,
+.order-goal-option:focus-visible {
+  background: rgba(109, 248, 206, .18);
+  border-color: rgba(109, 248, 206, .72);
+  outline: 0;
+  transform: translateX(3px);
+}
+
+.order-goal-option.is-selected {
+  background: var(--aqua);
+  border-color: var(--aqua);
+}
+
+.order-goal-option span:last-child {
+  color: #315e60;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .order-popup-form small {
@@ -1090,7 +1192,7 @@ footer nav svg {
   font-size: 12px;
 }
 
-.order-popup-form button,
+.order-popup-form .order-popup-submit,
 .order-popup-next-step button {
   align-items: center;
   background: var(--aqua);
@@ -1109,7 +1211,7 @@ footer nav svg {
   width: fit-content;
 }
 
-.order-popup-form button svg {
+.order-popup-form .order-popup-submit svg {
   fill: none;
   height: 18px;
   stroke: currentColor;
