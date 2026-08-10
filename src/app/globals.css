@@ -1093,6 +1093,7 @@ footer nav svg {
 .order-package-options {
   display: grid;
   gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .order-package-option {
@@ -1113,6 +1114,11 @@ footer nav svg {
   text-align: left;
   transition: background .2s ease, border-color .2s ease, color .2s ease;
   width: 100%;
+}
+
+.order-package-option span:last-child {
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .order-package-option:hover,
@@ -2280,8 +2286,21 @@ footer nav svg {
   }
 
   .order-package-option {
+    font-size: 13px;
+    gap: 7px;
     min-height: 44px;
     padding: 0 2px;
+  }
+
+  .order-package-box {
+    height: 14px;
+    width: 14px;
+  }
+
+  .order-package-option.is-selected .order-package-box::after {
+    height: 7px;
+    left: 4px;
+    width: 4px;
   }
 
   .hero {
