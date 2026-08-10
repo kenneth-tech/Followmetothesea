@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowIcon } from "../arrow-icon";
-import { OrderPopup } from "../order-popup";
 import { SiteFooter } from "../site-footer";
 import { SiteHeader } from "../site-header";
 
@@ -103,9 +102,9 @@ export default function AboutPage() {
             <Link href="/packages">
               Explore packages <ArrowIcon />
             </Link>
-            <OrderPopup triggerClassName="about-inline-cta">
+            <Link className="about-inline-cta" href="/contact">
               Contact us <ArrowIcon />
-            </OrderPopup>
+            </Link>
           </div>
         </div>
       </section>
