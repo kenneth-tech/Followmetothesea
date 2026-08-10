@@ -6,6 +6,7 @@ import { PackageIcon } from "./package-icon";
 import { ArrowIcon } from "./arrow-icon";
 import { SiteFooter } from "./site-footer";
 import { AnimatedRouteLink } from "./animated-route-link";
+import { OrderPopup } from "./order-popup";
 
 const caseStudies = [
   {
@@ -189,18 +190,27 @@ export default function Home() {
             </p>
 
             <div className="quick-actions" aria-label="Popular packages">
-              <Link className="action-button primary" href="/contact">
+              <OrderPopup
+                initialGoal="1K Likes"
+                triggerClassName="action-button primary"
+              >
                 <span>Get 1K likes now.</span>
                 <ArrowIcon />
-              </Link>
-              <Link className="action-button glass" href="/contact">
+              </OrderPopup>
+              <OrderPopup
+                initialGoal="1K Followers"
+                triggerClassName="action-button glass"
+              >
                 <span>Get 1K followers now.</span>
                 <ArrowIcon />
-              </Link>
-              <Link className="action-button glass" href="/contact">
+              </OrderPopup>
+              <OrderPopup
+                initialGoal="10K Views"
+                triggerClassName="action-button glass"
+              >
                 <span>Get 10K views now.</span>
                 <ArrowIcon />
-              </Link>
+              </OrderPopup>
             </div>
 
             <AnimatedRouteLink className="text-link" href="/packages">

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteHeader } from "../site-header";
 import { PackageIcon } from "../package-icon";
 import { ArrowIcon } from "../arrow-icon";
 import { SiteFooter } from "../site-footer";
+import { OrderPopup } from "../order-popup";
 
 export const metadata: Metadata = {
   title: "Packages | Follow Me To The Sea",
@@ -165,9 +165,9 @@ export default function PackagesPage() {
               options, choose what your page needs, and contact us to get
               started.
             </p>
-            <Link href="/contact">
+            <OrderPopup triggerClassName="packages-inline-cta">
               Request a package <ArrowIcon />
-            </Link>
+            </OrderPopup>
           </div>
         </div>
       </section>
@@ -199,13 +199,13 @@ export default function PackagesPage() {
                       ))}
                     </ul>
                   </div>
-                  <Link
-                    href="/contact"
-                    className="package-subscribe-button"
-                    aria-label={`Subscribe to ${option.name}`}
+                  <OrderPopup
+                    initialGoal={option.name}
+                    triggerClassName="package-subscribe-button"
+                    triggerAriaLabel={`Subscribe to ${option.name}`}
                   >
                     Subscribe Now
-                  </Link>
+                  </OrderPopup>
                 </article>
               ))}
             </div>
@@ -217,9 +217,9 @@ export default function PackagesPage() {
         <div className="page-shell">
           <p>Need something else for your socials?</p>
           <h2>Let&apos;s build the right package together.</h2>
-          <Link href="/contact">
+          <OrderPopup triggerClassName="packages-inline-cta">
             Contact us <ArrowIcon />
-          </Link>
+          </OrderPopup>
         </div>
       </section>
 

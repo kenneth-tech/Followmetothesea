@@ -365,8 +365,13 @@ svg {
 
 .action-button {
   align-items: center;
+  appearance: none;
+  background: transparent;
   border: 1px solid rgba(255,255,255,.2);
+  color: inherit;
+  cursor: pointer;
   display: flex;
+  font: inherit;
   font-size: 13px;
   font-weight: 700;
   gap: 16px;
@@ -1560,10 +1565,15 @@ footer nav svg {
   justify-content: center;
 }
 
-.about-cta a {
+.about-cta a,
+.about-inline-cta {
   align-items: center;
+  background: transparent;
   border: 1px solid rgba(255,255,255,.25);
+  color: inherit;
+  cursor: pointer;
   display: flex;
+  font: inherit;
   font-size: 10px;
   font-weight: 800;
   gap: 28px;
@@ -1575,7 +1585,8 @@ footer nav svg {
 }
 
 .about-cta a:first-child,
-.about-cta a:hover {
+.about-cta a:hover,
+.about-inline-cta:hover {
   background: var(--aqua);
   border-color: var(--aqua);
   color: var(--navy);
@@ -1801,11 +1812,15 @@ footer nav svg {
 }
 
 .packages-hero-copy > a,
-.packages-cta a {
+.packages-cta a,
+.packages-inline-cta {
   align-items: center;
+  border: 0;
   background: var(--aqua);
   color: var(--navy);
+  cursor: pointer;
   display: flex;
+  font: inherit;
   font-size: 11px;
   font-weight: 800;
   justify-content: space-between;
@@ -1817,7 +1832,8 @@ footer nav svg {
 }
 
 .packages-hero-copy > a:hover,
-.packages-cta a:hover {
+.packages-cta a:hover,
+.packages-inline-cta:hover {
   transform: translateY(-3px);
 }
 
@@ -2001,12 +2017,14 @@ footer nav svg {
 .package-options .package-subscribe-button {
   align-items: center;
   align-self: flex-end;
+  appearance: none;
   background: var(--aqua);
   border: 1px solid var(--aqua);
   border-radius: 0;
   color: var(--navy);
   cursor: pointer;
   display: inline-flex;
+  font: inherit;
   font-size: 9px;
   font-weight: 800;
   justify-content: center;
@@ -2069,7 +2087,8 @@ footer nav svg {
   max-width: 800px;
 }
 
-.packages-cta a {
+.packages-cta a,
+.packages-cta .packages-inline-cta {
   margin: 0 auto;
   max-width: 180px;
 }
@@ -2667,7 +2686,8 @@ footer nav svg {
     width: 100%;
   }
 
-  .about-cta a {
+  .about-cta a,
+  .about-inline-cta {
     justify-content: space-between;
     max-width: 290px;
     min-width: 0;
@@ -2760,7 +2780,8 @@ footer nav svg {
     margin-bottom: 24px;
   }
 
-  .packages-hero-copy > a {
+  .packages-hero-copy > a,
+  .packages-hero-copy .packages-inline-cta {
     max-width: 330px;
     width: 100%;
   }
@@ -2847,7 +2868,8 @@ footer nav svg {
     margin-bottom: 30px;
   }
 
-  .packages-cta a {
+  .packages-cta a,
+  .packages-cta .packages-inline-cta {
     max-width: 280px;
     width: 100%;
   }
