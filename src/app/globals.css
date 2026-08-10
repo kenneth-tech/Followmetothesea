@@ -1190,10 +1190,8 @@ footer nav svg {
 .order-popup-form .order-popup-submit,
 .order-popup-next-step button {
   align-items: center;
-  background: linear-gradient(90deg, var(--aqua) 0%, #8dffdc 42%, #dffef4 50%, var(--aqua) 60%, var(--aqua) 100%);
-  background-position: 0 0;
-  background-size: 220% 100%;
-  border: 0;
+  background: var(--aqua);
+  border: 1px solid var(--aqua);
   color: var(--navy);
   cursor: pointer;
   display: inline-flex;
@@ -1205,7 +1203,12 @@ footer nav svg {
   min-height: 48px;
   padding: 0 22px;
   text-transform: uppercase;
-  transition: background-position .45s ease, box-shadow .25s ease, transform .25s ease;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease,
+    color .2s ease,
+    transform .2s ease;
   width: fit-content;
 }
 
@@ -1221,9 +1224,16 @@ footer nav svg {
 
 .order-popup-form .order-popup-submit:hover,
 .order-popup-form .order-popup-submit:focus-visible {
-  background-position: 100% 0;
-  box-shadow: 0 14px 32px rgba(109, 248, 206, .24);
+  background: var(--navy);
+  border-color: var(--navy);
+  box-shadow: 0 10px 24px rgba(8,23,44,.14);
+  color: white;
   transform: translateY(-2px);
+}
+
+.order-popup-form .order-popup-submit:focus-visible {
+  outline: 2px solid rgba(127,255,212,.9);
+  outline-offset: 3px;
 }
 
 .order-popup-form .order-popup-submit:hover svg,
@@ -1232,7 +1242,7 @@ footer nav svg {
 }
 
 .order-popup-form .order-popup-submit:active {
-  box-shadow: 0 7px 18px rgba(109, 248, 206, .18);
+  box-shadow: 0 5px 14px rgba(8,23,44,.12);
   transform: translateY(0);
 }
 
