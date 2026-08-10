@@ -48,9 +48,18 @@ export function createOrderDraft(initialPackage = ""): OrderDraft {
 export function toggleOrderPackage(
   selectedPackages: string[],
   packageName: string,
+  lockedPackage = "",
 ): string[] {
+  if (packageName === lockedPackage) {
+    return selectedPackages.includes(lockedPackage)
+      ? selectedPackages
+      : [...selectedPackages, lockedPackage];
+  }
+
   if (selectedPackages.includes(packageName)) {
-    return selectedPackages.filter((selectedPackage) => selectedPackage !== packageName);
+    return selectedPackages.filter(
+      (selectedPackage) => selectedPackage !== packageName,
+    );
   }
 
   return [...selectedPackages, packageName];

@@ -68,7 +68,7 @@ export function OrderPopup({
   function togglePackage(packageName: string) {
     setDraft((current) => ({
       ...current,
-      packages: toggleOrderPackage(current.packages, packageName),
+      packages: toggleOrderPackage(current.packages, packageName, initialGoal),
     }));
     setErrors((current) => ({ ...current, packages: undefined }));
   }
@@ -171,7 +171,8 @@ export function OrderPopup({
                                 aria-checked={draft.packages.includes(
                                   option.value,
                                 )}
-                                className={`order-package-option${draft.packages.includes(option.value) ? " is-selected" : ""}`}
+                                className={`order-package-option${draft.packages.includes(option.value) ? " is-selected" : ""}${initialGoal === option.value ? " is-locked" : ""}`}
+                                disabled={initialGoal === option.value}
                                 key={option.value}
                                 onClick={() => togglePackage(option.value)}
                                 role="checkbox"

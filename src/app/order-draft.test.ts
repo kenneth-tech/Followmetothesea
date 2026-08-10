@@ -71,6 +71,25 @@ test("toggleOrderPackage adds and removes packages", () => {
   );
 });
 
+test("toggleOrderPackage keeps a locked subscribed package selected", () => {
+  assert.deepEqual(
+    toggleOrderPackage(["1K Followers"], "1K Followers", "1K Followers"),
+    ["1K Followers"],
+  );
+  assert.deepEqual(
+    toggleOrderPackage(["1K Followers"], "5K Likes", "1K Followers"),
+    ["1K Followers", "5K Likes"],
+  );
+  assert.deepEqual(
+    toggleOrderPackage(
+      ["1K Followers", "5K Likes"],
+      "5K Likes",
+      "1K Followers",
+    ),
+    ["1K Followers"],
+  );
+});
+
 test("validateOrderDraft reports required field errors", () => {
   assert.deepEqual(validateOrderDraft(createOrderDraft()), {
     valid: false,

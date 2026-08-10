@@ -1155,6 +1155,17 @@ footer nav svg {
   font-weight: 800;
 }
 
+.order-package-option.is-locked {
+  cursor: default;
+  opacity: 1;
+}
+
+.order-package-option.is-locked:hover,
+.order-package-option.is-locked:focus-visible {
+  background: white;
+  border-bottom-color: #dbe5e7;
+}
+
 .order-package-box {
   border: 1px solid #9aabad;
   display: inline-flex;
