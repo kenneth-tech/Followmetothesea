@@ -1049,6 +1049,12 @@ footer nav svg {
   padding-bottom: 12px;
 }
 
+.order-popup-form .order-text-field {
+  border-bottom: 0;
+  gap: 10px;
+  padding-bottom: 4px;
+}
+
 .order-popup-form label > span {
   color: #607378;
   font-size: 9px;
@@ -1058,14 +1064,22 @@ footer nav svg {
 }
 
 .order-popup-form input {
-  background: transparent;
-  border: 0;
+  background: #f7fbfa;
+  border: 1px solid #dbe5e7;
+  border-radius: 6px;
   color: var(--navy);
   font: inherit;
   font-size: 16px;
   outline: 0;
-  padding: 4px 0;
+  padding: 14px 16px;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
   width: 100%;
+}
+
+.order-popup-form input:focus {
+  background: white;
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 3px rgba(109, 248, 206, .2);
 }
 
 .order-popup-form input::placeholder {

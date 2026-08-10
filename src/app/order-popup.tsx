@@ -128,7 +128,7 @@ export function OrderPopup({
                 <p className="order-popup-label">Start your order</p>
                 <h2 id={titleId}>Tell us what to boost.</h2>
                 <form className="order-popup-form" onSubmit={handleSubmit}>
-                  <label>
+                  <label className="order-text-field">
                     <span>Name</span>
                     <input
                       autoComplete="name"
@@ -142,7 +142,7 @@ export function OrderPopup({
                     />
                     {errors.name && <small>{errors.name}</small>}
                   </label>
-                  <label>
+                  <label className="order-text-field">
                     <span>Link to social media page</span>
                     <input
                       maxLength={300}
