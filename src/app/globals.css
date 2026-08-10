@@ -1025,7 +1025,32 @@ footer nav svg {
   position: absolute;
   right: 18px;
   top: 18px;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease,
+    color .2s ease,
+    transform .2s ease;
   width: 38px;
+}
+
+.order-popup-close:hover,
+.order-popup-close:focus-visible {
+  background: var(--navy);
+  border-color: var(--navy);
+  box-shadow: 0 10px 24px rgba(8,23,44,.14);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.order-popup-close:focus-visible {
+  outline: 2px solid rgba(127,255,212,.9);
+  outline-offset: 3px;
+}
+
+.order-popup-close:active {
+  box-shadow: 0 5px 14px rgba(8,23,44,.12);
+  transform: translateY(0);
 }
 
 .order-popup-label {
