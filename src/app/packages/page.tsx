@@ -166,9 +166,9 @@ export default function PackagesPage() {
               options, choose what your page needs, and contact us to get
               started.
             </p>
-            <OrderPopup triggerClassName="packages-inline-cta">
+            <Link className="packages-inline-cta" href="/contact">
               Request a package <ArrowIcon />
-            </OrderPopup>
+            </Link>
           </div>
         </div>
       </section>
