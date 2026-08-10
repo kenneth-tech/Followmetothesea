@@ -6,7 +6,6 @@ import {
   useEffect,
   useId,
   useState,
-  type FocusEvent,
 } from "react";
 import { ArrowIcon } from "./arrow-icon";
 import {
@@ -37,7 +36,6 @@ export function OrderPopup({
   );
   const [errors, setErrors] = useState<OrderDraftErrors>({});
   const [continued, setContinued] = useState(false);
-  const [isGoalPickerOpen, setIsGoalPickerOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -58,7 +56,6 @@ export function OrderPopup({
     setDraft(createOrderDraft(initialGoal));
     setErrors({});
     setContinued(false);
-    setIsGoalPickerOpen(false);
     setIsOpen(true);
   }
 
@@ -69,17 +66,6 @@ export function OrderPopup({
 
   function selectGoal(goal: string) {
     updateField("goal", goal);
-    setIsGoalPickerOpen(false);
-  }
-
-  function handleGoalPickerBlur(event: FocusEvent<HTMLDivElement>) {
-    const nextTarget = event.relatedTarget;
-
-    if (nextTarget instanceof Node && event.currentTarget.contains(nextTarget)) {
-      return;
-    }
-
-    setIsGoalPickerOpen(false);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -167,50 +153,28 @@ export function OrderPopup({
                   <label>
                     <span>Goal</span>
                     <div
-                      className="order-goal-picker"
-                      onBlur={handleGoalPickerBlur}
+                      aria-label="Choose a package goal"
+                      className="order-goal-selector"
+                      role="group"
                     >
-                      <button
-                        aria-expanded={isGoalPickerOpen}
-                        aria-haspopup="listbox"
-                        className={`order-goal-trigger${draft.goal ? " has-value" : ""}${isGoalPickerOpen ? " is-open" : ""}`}
-                        onClick={() =>
-                          setIsGoalPickerOpen((current) => !current)
-                        }
-                        type="button"
-                      >
-                        <span>{draft.goal || "Select a package"}</span>
-                        <span aria-hidden="true" className="order-goal-chevron" />
-                      </button>
-
-                      {isGoalPickerOpen && (
-                        <div className="order-goal-menu" role="listbox">
-                          {ORDER_GOAL_GROUPS.map((group) => (
-                            <div
-                              className="order-goal-group"
-                              key={group.label}
-                              role="group"
-                            >
-                              <p>{group.label}</p>
-                              {group.options.map((goal) => (
-                                <button
-                                  aria-selected={draft.goal === goal}
-                                  className={`order-goal-option${draft.goal === goal ? " is-selected" : ""}`}
-                                  key={goal}
-                                  onClick={() => selectGoal(goal)}
-                                  role="option"
-                                  type="button"
-                                >
-                                  <span>{goal}</span>
-                                  {draft.goal === goal && (
-                                    <span aria-hidden="true">Selected</span>
-                                  )}
-                                </button>
-                              ))}
-                            </div>
-                          ))}
+                      {ORDER_GOAL_GROUPS.map((group) => (
+                        <div className="order-goal-group" key={group.label}>
+                          <p>{group.label}</p>
+                          <div className="order-goal-options">
+                            {group.options.map((option) => (
+                              <button
+                                aria-pressed={draft.goal === option.value}
+                                className={`order-goal-option${draft.goal === option.value ? " is-selected" : ""}`}
+                                key={option.value}
+                                onClick={() => selectGoal(option.value)}
+                                type="button"
+                              >
+                                {option.label}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      )}
+                      ))}
                     </div>
                     {errors.goal && <small>{errors.goal}</small>}
                   </label>

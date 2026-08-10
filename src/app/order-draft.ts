@@ -1,20 +1,32 @@
 export const ORDER_GOAL_GROUPS = [
   {
-    label: "Follower Packages",
-    options: ["1K Followers", "2K Followers", "5K Followers"],
+    label: "Followers",
+    options: [
+      { label: "1K", value: "1K Followers" },
+      { label: "2K", value: "2K Followers" },
+      { label: "5K", value: "5K Followers" },
+    ],
   },
   {
-    label: "Like Packages",
-    options: ["1K Likes", "2K Likes", "5K Likes"],
+    label: "Likes",
+    options: [
+      { label: "1K", value: "1K Likes" },
+      { label: "2K", value: "2K Likes" },
+      { label: "5K", value: "5K Likes" },
+    ],
   },
   {
-    label: "View Packages",
-    options: ["1K Views", "5K Views", "10K Views"],
+    label: "Views",
+    options: [
+      { label: "1K", value: "1K Views" },
+      { label: "5K", value: "5K Views" },
+      { label: "10K", value: "10K Views" },
+    ],
   },
 ] as const;
 
 export const ORDER_GOAL_OPTIONS = ORDER_GOAL_GROUPS.flatMap(
-  (group) => group.options,
+  (group) => group.options.map((option) => option.value),
 );
 
 export type OrderDraft = {
