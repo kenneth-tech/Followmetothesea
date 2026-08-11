@@ -25,6 +25,8 @@ const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
 export function ContactForm() {
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [selectedCountry, setSelectedCountry] =
     useState<CountryCode>("PH");
@@ -37,9 +39,46 @@ export function ContactForm() {
     getExampleNumber(selectedCountry, mobileExamples)?.formatNational() ??
     "Phone number";
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    setError("");
+    setIsSubmitting(true);
+    setSent(false);
+
+    try {
+      const response = await fetch("/api/contact", {
+        body: JSON.stringify({
+          country: String(formData.get("country") || ""),
+          email: String(formData.get("email") || ""),
+          message: String(formData.get("message") || ""),
+          name: String(formData.get("name") || ""),
+          phone: String(formData.get("phone") || ""),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+      const payload = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to send your inquiry.");
+      }
+
+      form.reset();
+      setSelectedCountry("PH");
+      setSent(true);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Unable to send your inquiry.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -105,10 +144,19 @@ export function ContactForm() {
           rows={4}
         />
       </label>
-      <button type="submit">
-        {sent ? "Message received!" : "Send inquiry"}
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting
+          ? "Sending..."
+          : sent
+            ? "Message received!"
+            : "Send inquiry"}
         <ArrowIcon />
       </button>
+      {error && (
+        <p className="form-status is-error" role="alert">
+          {error}
+        </p>
+      )}
       {sent && (
         <p className="form-status" role="status">
           Thanks! We&apos;ll be in touch soon.

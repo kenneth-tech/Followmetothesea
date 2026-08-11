@@ -982,10 +982,20 @@ footer nav svg {
   transform: scale(.985);
 }
 
+.contact-form button:disabled {
+  cursor: progress;
+  opacity: .72;
+  transform: none;
+}
+
 .form-status {
   color: var(--aqua);
   font-size: 13px;
   margin: 0;
+}
+
+.form-status.is-error {
+  color: #ff8c8c;
 }
 
 .order-popup-backdrop {
