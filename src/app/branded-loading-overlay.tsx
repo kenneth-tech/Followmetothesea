@@ -24,7 +24,7 @@ export function BrandedLoadingOverlay({
       <div className="loader-content">
         <div className="loader-mark" aria-hidden="true">
           <Image
-            src="/logo/icon fm.png"
+            src="/Logo/icon fm.png"
             alt=""
             width={108}
             height={108}

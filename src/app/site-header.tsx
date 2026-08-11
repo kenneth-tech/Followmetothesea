@@ -7,7 +7,7 @@ export function Logo() {
     <Link className="brand" href="/" aria-label="Follow Me To The Sea home">
       <Image
         className="brand-logo"
-        src="/logo/new.png"
+        src="/Logo/new.png"
         alt="Follow Me To The Sea"
         width={707}
         height={353}
