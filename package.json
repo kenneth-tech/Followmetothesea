@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts"
+    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts src/app/order-checkout.test.ts"
   },
   "dependencies": {
     "libphonenumber-js": "^1.13.9",
     "next": "16.2.12",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "stripe": "^22.5.0"
   },
   "overrides": {
     "brace-expansion": "5.0.8",

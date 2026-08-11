@@ -36,7 +36,8 @@ export function OrderPopup({
     createOrderDraft(initialGoal),
   );
   const [errors, setErrors] = useState<OrderDraftErrors>({});
-  const [continued, setContinued] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -56,7 +57,8 @@ export function OrderPopup({
   function openPopup() {
     setDraft(createOrderDraft(initialGoal));
     setErrors({});
-    setContinued(false);
+    setCheckoutError("");
+    setIsSubmitting(false);
     setIsOpen(true);
   }
 
@@ -73,13 +75,41 @@ export function OrderPopup({
     setErrors((current) => ({ ...current, packages: undefined }));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const result = validateOrderDraft(draft);
     setErrors(result.errors);
+    setCheckoutError("");
 
-    if (result.valid) {
-      setContinued(true);
+    if (!result.valid) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        body: JSON.stringify(draft),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+      const payload = (await response.json()) as {
+        error?: string;
+        url?: string;
+      };
+
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error || "Unable to start checkout.");
+      }
+
+      window.location.assign(payload.url);
+    } catch (error) {
+      setCheckoutError(
+        error instanceof Error ? error.message : "Unable to start checkout.",
+      );
+      setIsSubmitting(false);
     }
   }
 
@@ -111,23 +141,10 @@ export function OrderPopup({
               ×
             </button>
 
-            {continued ? (
-              <div className="order-popup-next-step">
-                <p className="order-popup-label">Order details received</p>
-                <h2 id={titleId}>Payment is next.</h2>
-                <p>
-                  Your order details are ready. Stripe Checkout will be added in
-                  the next step so you can continue to secure payment.
-                </p>
-                <button onClick={() => setIsOpen(false)} type="button">
-                  Close
-                </button>
-              </div>
-            ) : (
-              <>
-                <p className="order-popup-label">Start your order</p>
-                <h2 id={titleId}>Tell us what to boost.</h2>
-                <form className="order-popup-form" onSubmit={handleSubmit}>
+            <>
+              <p className="order-popup-label">Start your order</p>
+              <h2 id={titleId}>Tell us what to boost.</h2>
+              <form className="order-popup-form" onSubmit={handleSubmit}>
                   <label className="order-text-field">
                     <span>Name</span>
                     <input
@@ -197,12 +214,20 @@ export function OrderPopup({
                     )}
                     {errors.packages && <small>{errors.packages}</small>}
                   </label>
-                  <button className="order-popup-submit" type="submit">
-                    Continue <ArrowIcon />
-                  </button>
-                </form>
-              </>
-            )}
+                {checkoutError && (
+                  <p className="order-popup-error" role="alert">
+                    {checkoutError}
+                  </p>
+                )}
+                <button
+                  className="order-popup-submit"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? "Redirecting..." : "Continue"} <ArrowIcon />
+                </button>
+              </form>
+            </>
           </div>
         </div>
       )}

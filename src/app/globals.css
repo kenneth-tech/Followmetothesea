@@ -1245,6 +1245,13 @@ footer nav svg {
   font-size: 12px;
 }
 
+.order-popup-error {
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
 .order-popup-form .order-popup-submit,
 .order-popup-next-step button {
   align-items: center;
@@ -1304,10 +1311,91 @@ footer nav svg {
   transform: translateY(0);
 }
 
+.order-popup-form .order-popup-submit:disabled {
+  cursor: wait;
+  opacity: .72;
+  transform: none;
+}
+
 .order-popup-next-step p:not(.order-popup-label) {
   color: #607378;
   line-height: 1.7;
   margin: 0 0 24px;
+}
+
+.order-status-page {
+  background: var(--navy);
+  color: white;
+  min-height: 100vh;
+}
+
+.order-status-section {
+  align-items: center;
+  display: flex;
+  min-height: 70vh;
+  padding: 110px 0;
+}
+
+.order-status-card {
+  text-align: center;
+}
+
+.order-status-card p {
+  color: var(--aqua);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  margin: 0 0 22px;
+  text-transform: uppercase;
+}
+
+.order-status-card h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(54px, 8vw, 92px);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: .95;
+  margin: 0 auto 28px;
+  max-width: 780px;
+}
+
+.order-status-card > span {
+  color: rgba(255,255,255,.65);
+  display: block;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0 auto 34px;
+  max-width: 560px;
+}
+
+.order-status-card a {
+  align-items: center;
+  background: var(--aqua);
+  color: var(--navy);
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 800;
+  gap: 22px;
+  justify-content: center;
+  letter-spacing: .1em;
+  min-height: 52px;
+  padding: 0 24px;
+  text-transform: uppercase;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.order-status-card a:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+.order-status-card svg {
+  fill: none;
+  height: 18px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.5;
+  width: 18px;
 }
 
 .site-footer {
