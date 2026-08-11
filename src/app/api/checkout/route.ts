@@ -6,6 +6,7 @@ import {
   validateCheckoutOrder,
   type CheckoutOrderDraft,
 } from "../../order-checkout";
+import { recordCheckoutSession } from "../../order-storage";
 
 function getSiteUrl(request: Request): string {
   return (
@@ -66,6 +67,12 @@ export async function POST(request: Request) {
         { error: "Stripe did not return a checkout URL." },
         { status: 500 },
       );
+    }
+
+    try {
+      await recordCheckoutSession(draft, session.id);
+    } catch (error) {
+      console.error("Supabase order insert failed", error);
     }
 
     return NextResponse.json({ url: session.url });
