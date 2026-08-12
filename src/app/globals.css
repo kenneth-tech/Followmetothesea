@@ -358,9 +358,9 @@ svg {
 
 .quick-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  max-width: 680px;
+  flex-wrap: nowrap;
+  gap: 12px;
+  max-width: 100%;
 }
 
 .action-button {
@@ -372,16 +372,16 @@ svg {
   cursor: pointer;
   display: flex;
   font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  gap: 16px;
+  font-size: 17px;
+  font-weight: 900;
+  gap: 24px;
   justify-content: space-between;
-  min-width: 205px;
-  padding: 16px 18px;
+  line-height: 1.2;
+  min-width: 260px;
+  padding: 23px 24px;
   transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
 
-.action-button svg,
 .text-link svg,
 .package-card svg,
 footer nav svg {
@@ -392,6 +392,21 @@ footer nav svg {
   stroke-linejoin: round;
   stroke-width: 1.5;
   width: 17px;
+}
+
+.action-button svg {
+  fill: none;
+  flex: 0 0 auto;
+  height: 21px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 21px;
+}
+
+.action-button span {
+  white-space: nowrap;
 }
 
 .action-button:hover {
@@ -412,12 +427,14 @@ footer nav svg {
 
 .text-link {
   align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,.4);
+  border-bottom: 2px solid rgba(255,255,255,.62);
   display: inline-flex;
-  font-size: 13px;
-  gap: 24px;
-  margin-top: 26px;
-  padding-bottom: 7px;
+  font-size: 15px;
+  font-weight: 800;
+  gap: 30px;
+  margin-top: 30px;
+  padding-bottom: 9px;
+  white-space: nowrap;
 }
 
 .section {
@@ -939,6 +956,7 @@ footer nav svg {
   align-items: center;
   background: var(--aqua);
   border: 0;
+  border-radius: 8px;
   color: var(--navy);
   cursor: pointer;
   display: flex;
@@ -946,7 +964,9 @@ footer nav svg {
   font-weight: 800;
   justify-content: space-between;
   letter-spacing: .08em;
+  margin-left: auto;
   margin-top: 12px;
+  max-width: 320px;
   padding: 18px 20px;
   text-transform: uppercase;
   transform: scale(1);
@@ -2698,14 +2718,33 @@ footer nav svg {
   }
 
   .action-button {
+    font-size: 13px;
+    font-weight: 700;
+    gap: 16px;
+    line-height: normal;
     min-width: 0;
+    padding: 16px 18px;
     width: 100%;
   }
 
+  .action-button svg {
+    height: 17px;
+    stroke-width: 1.5;
+    width: 17px;
+  }
+
+  .action-button span {
+    white-space: normal;
+  }
+
   .text-link {
+    border-bottom: 1px solid rgba(255,255,255,.4);
     font-size: 12px;
+    font-weight: 400;
     gap: 18px;
     margin-top: 24px;
+    padding-bottom: 7px;
+    white-space: normal;
   }
 
   .section {
@@ -3071,6 +3110,7 @@ footer nav svg {
 
   .contact-form button {
     font-size: 10px;
+    margin-left: 0;
     margin-top: 6px;
     max-width: 220px;
     min-height: 44px;
