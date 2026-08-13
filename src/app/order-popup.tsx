@@ -11,6 +11,7 @@ import { ArrowIcon } from "./arrow-icon";
 import {
   ORDER_GOAL_GROUPS,
   createOrderDraft,
+  normalizeOrderDraft,
   toggleOrderPackage,
   validateOrderDraft,
   type OrderDraft,
@@ -38,6 +39,7 @@ export function OrderPopup({
   const [errors, setErrors] = useState<OrderDraftErrors>({});
   const [checkoutError, setCheckoutError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const safeDraft = normalizeOrderDraft(draft);
 
   useEffect(() => {
     if (!isOpen) {
@@ -70,14 +72,20 @@ export function OrderPopup({
   function togglePackage(packageName: string) {
     setDraft((current) => ({
       ...current,
-      packages: toggleOrderPackage(current.packages, packageName, initialGoal),
+      packages: toggleOrderPackage(
+        normalizeOrderDraft(current).packages,
+        packageName,
+        initialGoal,
+      ),
     }));
     setErrors((current) => ({ ...current, packages: undefined }));
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const result = validateOrderDraft(draft);
+    const normalizedDraft = normalizeOrderDraft(draft);
+    const result = validateOrderDraft(normalizedDraft);
+    setDraft(normalizedDraft);
     setErrors(result.errors);
     setCheckoutError("");
 
@@ -89,7 +97,7 @@ export function OrderPopup({
 
     try {
       const response = await fetch("/api/checkout", {
-        body: JSON.stringify(draft),
+        body: JSON.stringify(normalizedDraft),
         headers: {
           "Content-Type": "application/json",
         },
@@ -155,7 +163,7 @@ export function OrderPopup({
                       }
                       placeholder="Your full name"
                       type="text"
-                      value={draft.name}
+                      value={safeDraft.name}
                     />
                     {errors.name && <small>{errors.name}</small>}
                   </label>
@@ -169,7 +177,7 @@ export function OrderPopup({
                       }
                       placeholder="you@email.com"
                       type="email"
-                      value={draft.email}
+                      value={safeDraft.email}
                     />
                     {errors.email && <small>{errors.email}</small>}
                   </label>
@@ -182,7 +190,7 @@ export function OrderPopup({
                       }
                       placeholder="https://instagram.com/yourpage"
                       type="url"
-                      value={draft.socialLink}
+                      value={safeDraft.socialLink}
                     />
                     {errors.socialLink && <small>{errors.socialLink}</small>}
                   </label>
@@ -199,10 +207,10 @@ export function OrderPopup({
                           <div className="order-package-options">
                             {group.options.map((option) => (
                               <button
-                                aria-checked={draft.packages.includes(
+                                aria-checked={safeDraft.packages.includes(
                                   option.value,
                                 )}
-                                className={`order-package-option${draft.packages.includes(option.value) ? " is-selected" : ""}${initialGoal === option.value ? " is-locked" : ""}`}
+                                className={`order-package-option${safeDraft.packages.includes(option.value) ? " is-selected" : ""}${initialGoal === option.value ? " is-locked" : ""}`}
                                 disabled={initialGoal === option.value}
                                 key={option.value}
                                 onClick={() => togglePackage(option.value)}
@@ -220,10 +228,10 @@ export function OrderPopup({
                         </div>
                       ))}
                     </div>
-                    {draft.packages.length > 0 && (
+                    {safeDraft.packages.length > 0 && (
                       <div className="order-package-summary">
                         <span>Selected packages</span>
-                        <p>{draft.packages.join(", ")}</p>
+                        <p>{safeDraft.packages.join(", ")}</p>
                       </div>
                     )}
                     {errors.packages && <small>{errors.packages}</small>}

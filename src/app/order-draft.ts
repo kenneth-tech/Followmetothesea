@@ -47,6 +47,15 @@ export function createOrderDraft(initialPackage = ""): OrderDraft {
   };
 }
 
+export function normalizeOrderDraft(draft: Partial<OrderDraft>): OrderDraft {
+  return {
+    email: typeof draft.email === "string" ? draft.email : "",
+    name: typeof draft.name === "string" ? draft.name : "",
+    socialLink: typeof draft.socialLink === "string" ? draft.socialLink : "",
+    packages: Array.isArray(draft.packages) ? draft.packages : [],
+  };
+}
+
 export function toggleOrderPackage(
   selectedPackages: string[],
   packageName: string,
@@ -67,14 +76,15 @@ export function toggleOrderPackage(
   return [...selectedPackages, packageName];
 }
 
-export function validateOrderDraft(draft: OrderDraft): {
+export function validateOrderDraft(draft: Partial<OrderDraft>): {
   valid: boolean;
   errors: OrderDraftErrors;
 } {
   const errors: OrderDraftErrors = {};
-  const email = draft.email.trim();
+  const normalizedDraft = normalizeOrderDraft(draft);
+  const email = normalizedDraft.email.trim();
 
-  if (!draft.name.trim()) {
+  if (!normalizedDraft.name.trim()) {
     errors.name = "Enter your name.";
   }
 
@@ -84,11 +94,11 @@ export function validateOrderDraft(draft: OrderDraft): {
     errors.email = "Enter a valid email.";
   }
 
-  if (!draft.socialLink.trim()) {
+  if (!normalizedDraft.socialLink.trim()) {
     errors.socialLink = "Enter a social media page link.";
   }
 
-  if (draft.packages.length === 0) {
+  if (normalizedDraft.packages.length === 0) {
     errors.packages = "Choose at least one package.";
   }
 

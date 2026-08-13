@@ -60,6 +60,22 @@ test("createOrderDraft prefills one selected package and starts other fields emp
   });
 });
 
+test("validateOrderDraft handles older draft state with a missing email", () => {
+  assert.deepEqual(
+    validateOrderDraft({
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: ["1K Likes"],
+    } as never),
+    {
+      valid: false,
+      errors: {
+        email: "Enter your email.",
+      },
+    },
+  );
+});
+
 test("toggleOrderPackage adds and removes packages", () => {
   assert.deepEqual(toggleOrderPackage([], "1K Followers"), ["1K Followers"]);
   assert.deepEqual(toggleOrderPackage(["1K Followers"], "5K Likes"), [
