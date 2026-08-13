@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts src/app/order-checkout.test.ts src/app/order-storage.test.ts src/app/contact-storage.test.ts"
+    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts src/app/order-checkout.test.ts src/app/order-storage.test.ts src/app/contact-storage.test.ts src/app/notification-email.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

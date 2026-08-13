@@ -19,8 +19,25 @@ export type SupabaseOrderRecord = {
   package_count: number;
   total_cents: number;
   currency: "usd";
-  status: "checkout_started";
+  status: "checkout_started" | "paid";
   stripe_checkout_session_id: string;
+  stripe_payment_intent_id?: string | null;
+};
+
+export type PaidOrderNotificationDetails = Pick<
+  SupabaseOrderRecord,
+  | "currency"
+  | "customer_name"
+  | "packages"
+  | "social_link"
+  | "stripe_checkout_session_id"
+  | "stripe_payment_intent_id"
+  | "total_cents"
+>;
+
+export type PaidOrderUpdate = {
+  status: "paid";
+  stripe_payment_intent_id: string | null;
 };
 
 type SupabaseEnv = Record<string, string | undefined>;
@@ -54,6 +71,15 @@ export function buildOrderRecord(
   };
 }
 
+export function buildPaidOrderUpdate(
+  stripePaymentIntentId: string | null,
+): PaidOrderUpdate {
+  return {
+    status: "paid",
+    stripe_payment_intent_id: stripePaymentIntentId,
+  };
+}
+
 export async function recordCheckoutSession(
   draft: CheckoutOrderDraft,
   stripeCheckoutSessionId: string,
@@ -78,4 +104,45 @@ export async function recordCheckoutSession(
   if (error) {
     throw error;
   }
+}
+
+export async function markCheckoutSessionPaid(
+  stripeCheckoutSessionId: string,
+  stripePaymentIntentId: string | null,
+): Promise<PaidOrderNotificationDetails | null> {
+  const config = getSupabaseConfig();
+
+  if (!config) {
+    return null;
+  }
+
+  const supabase = createClient(config.url, config.key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+
+  const { data, error } = await supabase
+    .from(SUPABASE_ORDERS_TABLE)
+    .update(buildPaidOrderUpdate(stripePaymentIntentId))
+    .eq("stripe_checkout_session_id", stripeCheckoutSessionId)
+    .select(
+      [
+        "currency",
+        "customer_name",
+        "packages",
+        "social_link",
+        "stripe_checkout_session_id",
+        "stripe_payment_intent_id",
+        "total_cents",
+      ].join(","),
+    )
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as unknown as PaidOrderNotificationDetails;
 }

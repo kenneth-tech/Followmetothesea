@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   buildOrderRecord,
+  buildPaidOrderUpdate,
   getSupabaseConfig,
 } from "./order-storage.ts";
 
@@ -63,4 +64,18 @@ test("getSupabaseConfig supports secret and legacy service role keys", () => {
       url: "https://example.supabase.co",
     },
   );
+});
+
+test("buildPaidOrderUpdate formats Stripe payment details", () => {
+  assert.deepEqual(buildPaidOrderUpdate("pi_test_123"), {
+    status: "paid",
+    stripe_payment_intent_id: "pi_test_123",
+  });
+});
+
+test("buildPaidOrderUpdate accepts a missing payment intent", () => {
+  assert.deepEqual(buildPaidOrderUpdate(null), {
+    status: "paid",
+    stripe_payment_intent_id: null,
+  });
 });
