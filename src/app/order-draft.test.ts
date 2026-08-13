@@ -53,6 +53,7 @@ test("ORDER_GOAL_OPTIONS includes every package goal", () => {
 
 test("createOrderDraft prefills one selected package and starts other fields empty", () => {
   assert.deepEqual(createOrderDraft("1K Followers"), {
+    email: "",
     name: "",
     socialLink: "",
     packages: ["1K Followers"],
@@ -94,6 +95,7 @@ test("validateOrderDraft reports required field errors", () => {
   assert.deepEqual(validateOrderDraft(createOrderDraft()), {
     valid: false,
     errors: {
+      email: "Enter your email.",
       name: "Enter your name.",
       socialLink: "Enter a social media page link.",
       packages: "Choose at least one package.",
@@ -101,9 +103,27 @@ test("validateOrderDraft reports required field errors", () => {
   });
 });
 
+test("validateOrderDraft rejects malformed email", () => {
+  assert.deepEqual(
+    validateOrderDraft({
+      email: "jane",
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: ["1K Likes"],
+    }),
+    {
+      valid: false,
+      errors: {
+        email: "Enter a valid email.",
+      },
+    },
+  );
+});
+
 test("validateOrderDraft accepts a complete draft", () => {
   assert.deepEqual(
     validateOrderDraft({
+      email: "jane@example.com",
       name: "Jane Doe",
       socialLink: "https://instagram.com/example",
       packages: ["1K Likes", "5K Views"],

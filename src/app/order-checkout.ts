@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 
 export type CheckoutOrderDraft = {
+  email: string;
   name: string;
   socialLink: string;
   packages: string[];
@@ -55,6 +56,8 @@ export function validateCheckoutOrder(draft: unknown): {
       : {};
   const name =
     typeof checkoutDraft.name === "string" ? checkoutDraft.name : "";
+  const email =
+    typeof checkoutDraft.email === "string" ? checkoutDraft.email : "";
   const socialLink =
     typeof checkoutDraft.socialLink === "string"
       ? checkoutDraft.socialLink
@@ -65,6 +68,12 @@ export function validateCheckoutOrder(draft: unknown): {
 
   if (!name.trim()) {
     errors.name = "Enter your name.";
+  }
+
+  if (!email.trim()) {
+    errors.email = "Enter your email.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    errors.email = "Enter a valid email.";
   }
 
   if (!socialLink.trim()) {
@@ -93,6 +102,7 @@ export function buildCheckoutMetadata(
   draft: CheckoutOrderDraft,
 ): Record<string, string> {
   return {
+    customer_email: draft.email.trim(),
     customer_name: draft.name.trim(),
     social_link: draft.socialLink.trim(),
     packages: draft.packages.join(", "),

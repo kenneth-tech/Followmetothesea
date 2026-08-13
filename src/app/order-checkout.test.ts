@@ -54,6 +54,7 @@ test("buildCheckoutLineItems creates Stripe line items from selected packages", 
 test("validateCheckoutOrder rejects unknown package names", () => {
   assert.deepEqual(
     validateCheckoutOrder({
+      email: "jane@example.com",
       name: "Jane Doe",
       socialLink: "https://instagram.com/example",
       packages: ["1K Followers", "Free followers"],
@@ -71,6 +72,7 @@ test("validateCheckoutOrder rejects malformed checkout data", () => {
   assert.deepEqual(validateCheckoutOrder(null), {
     valid: false,
     errors: {
+      email: "Enter your email.",
       name: "Enter your name.",
       socialLink: "Enter a social media page link.",
       packages: "Choose at least one package.",
@@ -78,6 +80,7 @@ test("validateCheckoutOrder rejects malformed checkout data", () => {
   });
   assert.deepEqual(
     validateCheckoutOrder({
+      email: "jane@example.com",
       name: "Jane Doe",
       socialLink: "https://instagram.com/example",
       packages: "1K Followers",
@@ -91,14 +94,33 @@ test("validateCheckoutOrder rejects malformed checkout data", () => {
   );
 });
 
-test("buildCheckoutMetadata includes order details for Stripe", () => {
+test("validateCheckoutOrder rejects malformed email", () => {
+  assert.deepEqual(
+    validateCheckoutOrder({
+      email: "jane",
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: ["1K Followers"],
+    }),
+    {
+      valid: false,
+      errors: {
+        email: "Enter a valid email.",
+      },
+    },
+  );
+});
+
+test("buildCheckoutMetadata includes customer email for Stripe", () => {
   assert.deepEqual(
     buildCheckoutMetadata({
+      email: "  jane@example.com  ",
       name: "Jane Doe",
       socialLink: "https://instagram.com/example",
       packages: ["1K Followers", "5K Likes"],
     }),
     {
+      customer_email: "jane@example.com",
       customer_name: "Jane Doe",
       social_link: "https://instagram.com/example",
       packages: "1K Followers, 5K Likes",

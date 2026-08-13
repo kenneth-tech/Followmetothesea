@@ -142,6 +142,7 @@ export function buildPaidOrderNotificationText(
     "Paid package checkout",
     "",
     `Customer name: ${order.customer_name}`,
+    `Customer email: ${order.customer_email}`,
     `Social link: ${order.social_link}`,
     `Packages: ${order.packages.join(", ")}`,
     `Total: ${formatAmount(order.total_cents, order.currency)}`,
@@ -192,8 +193,13 @@ export function buildPaidOrderNotificationHtml(
   paidAt = new Date(),
 ): string {
   const socialLink = order.social_link;
+  const customerEmail = order.customer_email;
   const orderRows = [
     buildDetailRow("Customer name", escapeHtml(order.customer_name)),
+    buildDetailRow(
+      "Customer email",
+      `<a href="mailto:${encodeURIComponent(customerEmail)}" style="color:#08172c;text-decoration:underline;">${escapeHtml(customerEmail)}</a>`,
+    ),
     buildDetailRow(
       "Social link",
       `<a href="${escapeHtml(socialLink)}" style="color:#08172c;text-decoration:underline;">${escapeHtml(socialLink)}</a>`,

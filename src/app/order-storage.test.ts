@@ -8,6 +8,7 @@ import {
 } from "./order-storage.ts";
 
 const draft = {
+  email: "  kenneth@example.com  ",
   name: "  Kenneth  ",
   socialLink: "  https://instagram.com/followmetothesea  ",
   packages: ["1K Followers", "5K Views"],
@@ -15,6 +16,7 @@ const draft = {
 
 test("buildOrderRecord formats a checkout order for Supabase", () => {
   assert.deepEqual(buildOrderRecord(draft, "cs_test_123"), {
+    customer_email: "kenneth@example.com",
     customer_name: "Kenneth",
     social_link: "https://instagram.com/followmetothesea",
     packages: ["1K Followers", "5K Views"],

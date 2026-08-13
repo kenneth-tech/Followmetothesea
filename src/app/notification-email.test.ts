@@ -60,6 +60,7 @@ test("buildPaidOrderNotificationText includes paid checkout details", () => {
   const text = buildPaidOrderNotificationText(
     {
       currency: "usd",
+      customer_email: "kenneth@example.com",
       customer_name: "Kenneth",
       packages: ["1K Followers", "2K Likes"],
       social_link: "https://instagram.com/example",
@@ -72,6 +73,7 @@ test("buildPaidOrderNotificationText includes paid checkout details", () => {
 
   assert.match(text, /Paid package checkout/);
   assert.match(text, /Customer name: Kenneth/);
+  assert.match(text, /Customer email: kenneth@example\.com/);
   assert.match(text, /Social link: https:\/\/instagram\.com\/example/);
   assert.match(text, /Packages: 1K Followers, 2K Likes/);
   assert.match(text, /Total: \$248\.00 USD/);
@@ -105,6 +107,7 @@ test("buildPaidOrderNotificationHtml renders a branded paid order email", () => 
   const html = buildPaidOrderNotificationHtml(
     {
       currency: "usd",
+      customer_email: "kenneth@example.com",
       customer_name: "Kenneth",
       packages: ["1K Followers", "2K Likes"],
       social_link: "https://instagram.com/example",
@@ -117,6 +120,7 @@ test("buildPaidOrderNotificationHtml renders a branded paid order email", () => 
 
   assert.match(html, /Paid Package Checkout/);
   assert.match(html, /Payment Confirmed/);
+  assert.match(html, /mailto:kenneth%40example\.com/);
   assert.match(html, /href="https:\/\/instagram\.com\/example"/);
   assert.match(html, /\$248\.00 USD/);
   assert.match(html, /1K Followers/);

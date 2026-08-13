@@ -13,6 +13,7 @@ export type SupabaseConfig = {
 };
 
 export type SupabaseOrderRecord = {
+  customer_email: string;
   customer_name: string;
   social_link: string;
   packages: string[];
@@ -27,6 +28,7 @@ export type SupabaseOrderRecord = {
 export type PaidOrderNotificationDetails = Pick<
   SupabaseOrderRecord,
   | "currency"
+  | "customer_email"
   | "customer_name"
   | "packages"
   | "social_link"
@@ -60,6 +62,7 @@ export function buildOrderRecord(
   stripeCheckoutSessionId: string,
 ): SupabaseOrderRecord {
   return {
+    customer_email: draft.email.trim(),
     customer_name: draft.name.trim(),
     social_link: draft.socialLink.trim(),
     packages: draft.packages,
@@ -130,6 +133,7 @@ export async function markCheckoutSessionPaid(
     .select(
       [
         "currency",
+        "customer_email",
         "customer_name",
         "packages",
         "social_link",

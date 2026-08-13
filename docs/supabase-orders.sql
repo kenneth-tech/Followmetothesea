@@ -1,6 +1,7 @@
 create table if not exists public.orders (
   id bigint generated always as identity primary key,
   created_at timestamptz not null default now(),
+  customer_email text,
   customer_name text not null,
   social_link text not null,
   packages text[] not null,
@@ -24,3 +25,6 @@ alter table public.orders enable row level security;
 
 revoke all on public.orders from anon;
 revoke all on public.orders from authenticated;
+
+alter table public.orders
+  add column if not exists customer_email text;

@@ -62,7 +62,7 @@ export function OrderPopup({
     setIsOpen(true);
   }
 
-  function updateField(field: "name" | "socialLink", value: string) {
+  function updateField(field: "email" | "name" | "socialLink", value: string) {
     setDraft((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
   }
@@ -158,6 +158,20 @@ export function OrderPopup({
                       value={draft.name}
                     />
                     {errors.name && <small>{errors.name}</small>}
+                  </label>
+                  <label className="order-text-field">
+                    <span>Email address</span>
+                    <input
+                      autoComplete="email"
+                      maxLength={254}
+                      onChange={(event) =>
+                        updateField("email", event.target.value)
+                      }
+                      placeholder="you@email.com"
+                      type="email"
+                      value={draft.email}
+                    />
+                    {errors.email && <small>{errors.email}</small>}
                   </label>
                   <label className="order-text-field">
                     <span>Link to social media page</span>

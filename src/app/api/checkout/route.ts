@@ -53,6 +53,7 @@ export async function POST(request: Request) {
   try {
     const session = await stripe.checkout.sessions.create({
       cancel_url: `${siteUrl}/order/cancel`,
+      customer_email: draft.email.trim(),
       line_items: buildCheckoutLineItems(draft.packages),
       metadata,
       mode: "payment",

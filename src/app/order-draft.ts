@@ -30,6 +30,7 @@ export const ORDER_GOAL_OPTIONS = ORDER_GOAL_GROUPS.flatMap(
 );
 
 export type OrderDraft = {
+  email: string;
   name: string;
   socialLink: string;
   packages: string[];
@@ -39,6 +40,7 @@ export type OrderDraftErrors = Partial<Record<keyof OrderDraft, string>>;
 
 export function createOrderDraft(initialPackage = ""): OrderDraft {
   return {
+    email: "",
     name: "",
     socialLink: "",
     packages: initialPackage ? [initialPackage] : [],
@@ -70,9 +72,16 @@ export function validateOrderDraft(draft: OrderDraft): {
   errors: OrderDraftErrors;
 } {
   const errors: OrderDraftErrors = {};
+  const email = draft.email.trim();
 
   if (!draft.name.trim()) {
     errors.name = "Enter your name.";
+  }
+
+  if (!email) {
+    errors.email = "Enter your email.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Enter a valid email.";
   }
 
   if (!draft.socialLink.trim()) {
