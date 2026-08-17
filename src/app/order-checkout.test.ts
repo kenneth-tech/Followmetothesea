@@ -1,9 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  MAX_CHECKOUT_PACKAGES,
   ORDER_PACKAGE_PRICES,
+  buildCheckoutSessionParams,
   buildCheckoutLineItems,
   buildCheckoutMetadata,
+  getCheckoutSiteUrl,
   getOrderTotalCents,
   validateCheckoutOrder,
 } from "./order-checkout.ts";
@@ -111,6 +114,59 @@ test("validateCheckoutOrder rejects malformed email", () => {
   );
 });
 
+test("validateCheckoutOrder rejects unsafe social media URLs", () => {
+  assert.deepEqual(
+    validateCheckoutOrder({
+      email: "jane@example.com",
+      name: "Jane Doe",
+      socialLink: "javascript:alert(1)",
+      packages: ["1K Followers"],
+    }),
+    {
+      valid: false,
+      errors: {
+        socialLink: "Enter a valid http or https link.",
+      },
+    },
+  );
+});
+
+test("validateCheckoutOrder rejects duplicate packages", () => {
+  assert.deepEqual(
+    validateCheckoutOrder({
+      email: "jane@example.com",
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: ["1K Followers", "1K Followers"],
+    }),
+    {
+      valid: false,
+      errors: {
+        packages: "Choose each package only once.",
+      },
+    },
+  );
+});
+
+test("validateCheckoutOrder rejects oversized package arrays", () => {
+  assert.deepEqual(
+    validateCheckoutOrder({
+      email: "jane@example.com",
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: Array.from({ length: MAX_CHECKOUT_PACKAGES + 1 }, () =>
+        "1K Followers"
+      ),
+    }),
+    {
+      valid: false,
+      errors: {
+        packages: `Choose no more than ${MAX_CHECKOUT_PACKAGES} packages.`,
+      },
+    },
+  );
+});
+
 test("buildCheckoutMetadata includes customer email for Stripe", () => {
   assert.deepEqual(
     buildCheckoutMetadata({
@@ -128,4 +184,29 @@ test("buildCheckoutMetadata includes customer email for Stripe", () => {
       total_cents: "39800",
     },
   );
+});
+
+test("getCheckoutSiteUrl requires a configured http or https site URL", () => {
+  assert.equal(getCheckoutSiteUrl({}), null);
+  assert.equal(getCheckoutSiteUrl({ NEXT_PUBLIC_SITE_URL: "notaurl" }), null);
+  assert.equal(
+    getCheckoutSiteUrl({
+      NEXT_PUBLIC_SITE_URL: "https://www.followmetothesea.com/",
+    }),
+    "https://www.followmetothesea.com",
+  );
+});
+
+test("buildCheckoutSessionParams limits launch checkout to card payments", () => {
+  const params = buildCheckoutSessionParams(
+    {
+      email: "jane@example.com",
+      name: "Jane Doe",
+      socialLink: "https://instagram.com/example",
+      packages: ["1K Followers"],
+    },
+    "https://www.followmetothesea.com",
+  );
+
+  assert.deepEqual(params.payment_method_types, ["card"]);
 });

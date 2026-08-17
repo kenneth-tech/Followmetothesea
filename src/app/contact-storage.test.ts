@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  CONTACT_FIELD_LIMITS,
   buildContactInquiryRecord,
   validateContactInquiry,
 } from "./contact-storage.ts";
@@ -47,6 +48,27 @@ test("validateContactInquiry rejects malformed email", () => {
     {
       errors: {
         email: "Enter a valid email.",
+      },
+      valid: false,
+    },
+  );
+});
+
+test("validateContactInquiry rejects oversized fields", () => {
+  assert.deepEqual(
+    validateContactInquiry({
+      ...inquiry,
+      email: `${"a".repeat(CONTACT_FIELD_LIMITS.email)}@example.com`,
+      message: "a".repeat(CONTACT_FIELD_LIMITS.message + 1),
+      name: "a".repeat(CONTACT_FIELD_LIMITS.name + 1),
+      phone: "1".repeat(CONTACT_FIELD_LIMITS.phone + 1),
+    }),
+    {
+      errors: {
+        email: `Enter no more than ${CONTACT_FIELD_LIMITS.email} characters.`,
+        message: `Enter no more than ${CONTACT_FIELD_LIMITS.message} characters.`,
+        name: `Enter no more than ${CONTACT_FIELD_LIMITS.name} characters.`,
+        phone: `Enter no more than ${CONTACT_FIELD_LIMITS.phone} characters.`,
       },
       valid: false,
     },

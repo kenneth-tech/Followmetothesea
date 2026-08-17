@@ -5,6 +5,7 @@ import {
   buildOrderRecord,
   buildPaidOrderUpdate,
   getSupabaseConfig,
+  recordCheckoutSession,
 } from "./order-storage.ts";
 
 const draft = {
@@ -65,6 +66,13 @@ test("getSupabaseConfig supports secret and legacy service role keys", () => {
       key: "service-role-test",
       url: "https://example.supabase.co",
     },
+  );
+});
+
+test("recordCheckoutSession fails when Supabase is not configured", async () => {
+  await assert.rejects(
+    recordCheckoutSession(draft, "cs_test_123", {}),
+    /Supabase is not configured/,
   );
 });
 

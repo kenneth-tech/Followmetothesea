@@ -86,11 +86,12 @@ export function buildPaidOrderUpdate(
 export async function recordCheckoutSession(
   draft: CheckoutOrderDraft,
   stripeCheckoutSessionId: string,
+  env: SupabaseEnv = process.env,
 ): Promise<void> {
-  const config = getSupabaseConfig();
+  const config = getSupabaseConfig(env);
 
   if (!config) {
-    return;
+    throw new Error("Supabase is not configured.");
   }
 
   const supabase = createClient(config.url, config.key, {

@@ -20,6 +20,14 @@ export type ContactInquiryRecord = ContactInquiryDraft & {
   status: "new";
 };
 
+export const CONTACT_FIELD_LIMITS = {
+  country: 2,
+  email: 254,
+  message: 1000,
+  name: 100,
+  phone: 30,
+} as const;
+
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function getDraftValue(
@@ -46,24 +54,34 @@ export function validateContactInquiry(draft: unknown): {
 
   if (!country.trim()) {
     errors.country = "Choose a country.";
+  } else if (country.trim().length > CONTACT_FIELD_LIMITS.country) {
+    errors.country = `Enter no more than ${CONTACT_FIELD_LIMITS.country} characters.`;
   }
 
   if (!email.trim()) {
     errors.email = "Enter your email.";
   } else if (!emailPattern.test(email.trim())) {
     errors.email = "Enter a valid email.";
+  } else if (email.trim().length > CONTACT_FIELD_LIMITS.email) {
+    errors.email = `Enter no more than ${CONTACT_FIELD_LIMITS.email} characters.`;
   }
 
   if (!message.trim()) {
     errors.message = "Enter a message.";
+  } else if (message.trim().length > CONTACT_FIELD_LIMITS.message) {
+    errors.message = `Enter no more than ${CONTACT_FIELD_LIMITS.message} characters.`;
   }
 
   if (!name.trim()) {
     errors.name = "Enter your name.";
+  } else if (name.trim().length > CONTACT_FIELD_LIMITS.name) {
+    errors.name = `Enter no more than ${CONTACT_FIELD_LIMITS.name} characters.`;
   }
 
   if (!phone.trim()) {
     errors.phone = "Enter your phone number.";
+  } else if (phone.trim().length > CONTACT_FIELD_LIMITS.phone) {
+    errors.phone = `Enter no more than ${CONTACT_FIELD_LIMITS.phone} characters.`;
   }
 
   return {

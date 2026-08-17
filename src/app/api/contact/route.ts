@@ -6,8 +6,27 @@ import {
   type ContactInquiryDraft,
 } from "../../contact-storage";
 import { sendContactInquiryNotification } from "../../notification-email";
+import {
+  buildRateLimitedResponse,
+  contactRateLimiter,
+  getClientIp,
+} from "../../rate-limit";
+import { isAllowedSiteRequest } from "../../request-security";
 
 export async function POST(request: Request) {
+  if (!isAllowedSiteRequest(request)) {
+    return NextResponse.json(
+      { error: "Request is not allowed." },
+      { status: 403 },
+    );
+  }
+
+  const rateLimit = contactRateLimiter.check(`contact:${getClientIp(request)}`);
+
+  if (!rateLimit.allowed) {
+    return buildRateLimitedResponse(rateLimit);
+  }
+
   let draft: ContactInquiryDraft;
 
   try {

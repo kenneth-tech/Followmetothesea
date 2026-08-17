@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts src/app/order-checkout.test.ts src/app/order-storage.test.ts src/app/contact-storage.test.ts src/app/notification-email.test.ts"
+    "test:order-popup": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/app/order-draft.test.ts src/app/order-checkout.test.ts src/app/order-storage.test.ts src/app/contact-storage.test.ts src/app/notification-email.test.ts src/app/request-security.test.ts src/app/rate-limit.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
@@ -18,7 +18,7 @@
     "stripe": "^22.5.0"
   },
   "overrides": {
-    "brace-expansion": "5.0.8",
+    "brace-expansion": "5.0.9",
     "minimatch": "10.2.6",
     "postcss": "8.5.23",
     "sharp": "0.35.3"
