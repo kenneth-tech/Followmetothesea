@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { DM_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import { LoadingScreen } from "./loading-screen";
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body>
         <LoadingScreen />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
