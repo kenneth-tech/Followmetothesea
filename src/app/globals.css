@@ -2336,10 +2336,11 @@ footer nav svg {
   align-items: center;
   align-self: flex-end;
   appearance: none;
-  background: var(--aqua);
-  border: 1px solid var(--aqua);
+  background: var(--navy);
+  border: 1px solid var(--navy);
   border-radius: 0;
-  color: var(--navy);
+  box-shadow: 0 12px 26px rgba(8,23,44,.16);
+  color: white;
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -2362,10 +2363,10 @@ footer nav svg {
 
 .package-options .package-subscribe-button:hover,
 .package-options .package-subscribe-button:focus-visible {
-  background: var(--navy);
-  border-color: var(--navy);
-  box-shadow: 0 10px 24px rgba(8,23,44,.14);
-  color: white;
+  background: var(--aqua);
+  border-color: var(--aqua);
+  box-shadow: 0 16px 32px rgba(8,23,44,.22);
+  color: var(--navy);
   transform: translateY(-2px);
 }
 
@@ -2845,8 +2846,14 @@ footer nav svg {
     min-width: 0;
   }
 
+  .contact-copy {
+    text-align: center;
+  }
+
   .contact-copy > p:not(.section-kicker) {
     font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .contact-copy > a {
@@ -3109,13 +3116,14 @@ footer nav svg {
   }
 
   .contact-form button {
-    font-size: 10px;
-    margin-left: 0;
+    font-size: 9px;
+    justify-self: end;
+    margin-left: auto;
     margin-top: 6px;
-    max-width: 220px;
-    min-height: 44px;
-    padding: 12px 15px;
-    width: 100%;
+    max-width: 170px;
+    min-height: 40px;
+    padding: 10px 13px;
+    width: min(170px, 100%);
   }
 
   .contact-form button svg {
