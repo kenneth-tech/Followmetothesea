@@ -353,8 +353,8 @@ export default function Home() {
               Tell us what you&apos;re working on. We&apos;ll get back to you
               with a package that makes sense.
             </p>
-            <a href="mailto:hello@followmetothesea.com">
-              hello@followmetothesea.com
+            <a href="mailto:marketing@sandseamedia.com">
+              marketing@sandseamedia.com
             </a>
           </div>
           <ContactForm />

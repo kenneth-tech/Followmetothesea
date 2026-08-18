@@ -1786,6 +1786,10 @@ footer nav svg {
   padding: 115px 0;
 }
 
+.about-values .about-page-label {
+  animation: about-section-rise .7s cubic-bezier(.2,.8,.2,1) both;
+}
+
 .about-section-heading {
   align-items: end;
   display: flex;
@@ -1798,6 +1802,7 @@ footer nav svg {
 }
 
 .about-section-heading h2 {
+  animation: about-section-rise .75s .08s cubic-bezier(.2,.8,.2,1) both;
   font-size: clamp(48px, 5.7vw, 76px);
   font-weight: 550;
   line-height: 1;
@@ -1805,6 +1810,7 @@ footer nav svg {
 }
 
 .about-section-heading > p {
+  animation: about-section-rise .75s .16s cubic-bezier(.2,.8,.2,1) both;
   color: #63767b;
   line-height: 1.65;
   margin: 0 0 6px;
@@ -1813,22 +1819,54 @@ footer nav svg {
 
 .about-values-grid {
   display: grid;
+  gap: 14px;
   grid-template-columns: repeat(3, 1fr);
 }
 
 .about-values-grid article {
-  border-right: 1px solid var(--line);
-  border-top: 1px solid var(--line);
+  animation: about-card-rise .72s cubic-bezier(.2,.8,.2,1) both;
+  border: 1px solid var(--line);
+  color: var(--navy);
   min-height: 250px;
+  overflow: hidden;
   padding: 32px;
+  position: relative;
+  transition: color .25s ease, transform .25s ease;
 }
 
-.about-values-grid article:nth-child(3n + 1) {
-  border-left: 1px solid var(--line);
+.about-values-grid article::before {
+  background: var(--aqua);
+  content: "";
+  inset: 100% 0 0;
+  position: absolute;
+  transition: inset .25s ease;
+  z-index: 0;
 }
 
-.about-values-grid article:nth-last-child(-n + 3) {
-  border-bottom: 1px solid var(--line);
+.about-values-grid article:nth-child(1) {
+  animation-delay: .22s;
+}
+
+.about-values-grid article:nth-child(2) {
+  animation-delay: .32s;
+}
+
+.about-values-grid article:nth-child(3) {
+  animation-delay: .42s;
+}
+
+.about-values-grid article:hover {
+  color: var(--navy);
+  transform: translateY(-6px);
+}
+
+.about-values-grid article:hover::before {
+  inset: 0;
+}
+
+.about-values-grid article > * {
+  position: relative;
+  z-index: 1;
 }
 
 .about-values-grid article > span {
@@ -1837,7 +1875,12 @@ footer nav svg {
   display: block;
   height: 9px;
   margin-bottom: 62px;
+  transition: background .25s ease;
   width: 9px;
+}
+
+.about-values-grid article:hover > span {
+  background: rgba(8,23,44,.22);
 }
 
 .about-values-grid h3 {
@@ -1852,6 +1895,35 @@ footer nav svg {
   font-size: 14px;
   line-height: 1.6;
   margin: 0;
+  transition: color .25s ease;
+}
+
+.about-values-grid article:hover p {
+  color: rgba(7,21,32,.7);
+}
+
+@keyframes about-section-rise {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes about-card-rise {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 .about-cta {
@@ -3033,14 +3105,8 @@ footer nav svg {
   }
 
   .about-values-grid article {
-    border-bottom: 0;
-    border-left: 1px solid var(--line);
     min-height: 0;
     padding: 25px 22px 28px;
-  }
-
-  .about-values-grid article:last-child {
-    border-bottom: 1px solid var(--line);
   }
 
   .about-values-grid article > span {

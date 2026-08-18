@@ -37,8 +37,8 @@ export default function ContactPage() {
             <div className="contact-details">
               <div>
                 <small>Email us</small>
-                <a href="mailto:hello@followmetothesea.com">
-                  hello@followmetothesea.com
+                <a href="mailto:marketing@sandseamedia.com">
+                  marketing@sandseamedia.com
                 </a>
               </div>
               <div>

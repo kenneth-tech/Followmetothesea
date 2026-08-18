@@ -66,12 +66,12 @@ export function SiteFooter() {
 
           <a
             className="footer-contact-card"
-            href="mailto:hello@followmetothesea.com"
+            href="mailto:marketing@sandseamedia.com"
           >
             <span className="footer-contact-icon"><MailIcon /></span>
             <span>
               <small>Email us</small>
-              <strong>hello@followmetothesea.com</strong>
+              <strong>marketing@sandseamedia.com</strong>
             </span>
           </a>
 
